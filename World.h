@@ -12,9 +12,7 @@ public:
     World(sf::Vector2i worldSizeTiles,bool drawGrid,int tileSize);
     void Draw(sf::RenderWindow& window);
     ~World();
-    void setWorldSizeTiles(sf::Vector2i world_size);
-    void setdrawGrid(bool state);
-    void settileSize(int size);
+
 private:
     void m_BuildGrid();
 //VARS
@@ -25,6 +23,7 @@ private:
     int m_tileSize;
     sf::Vector2i m_worldSizeInTiles;
     sf::VertexArray m_overlayGrid;
+    sf::VertexArray m_borderGrid;
 };
 
 
