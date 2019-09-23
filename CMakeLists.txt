@@ -6,6 +6,9 @@ set(SFML_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/SFML-2.5.1/lib/cmake/SFML")
 
 set(SOURCE_FILES main.cpp)
 
+file(GLOB ALL_REQUIRED_DLL "required_dlls/*.dll")
+file(COPY ${ALL_REQUIRED_DLL} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 find_package(SFML 2.5.1 COMPONENTS system window graphics network audio REQUIRED)
