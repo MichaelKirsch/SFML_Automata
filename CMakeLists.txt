@@ -4,9 +4,9 @@ project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 17)
 set(SFML_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/SFML-2.5.1/lib/cmake/SFML")
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp Game.cpp Game.h World.cpp World.h Creature.cpp Creature.h)
 
-file(GLOB ALL_REQUIRED_DLL "required_dlls/*.dll")
+file(GLOB ALL_REQUIRED_DLL "libs/required_dlls/*.dll")
 file(COPY ${ALL_REQUIRED_DLL} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
