@@ -3,7 +3,8 @@
 #include "Game.h"
 
 Game::Game() : world(sf::Vector2i(TILEMAP_X,TILEMAP_Y), true,TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata")  {
-    view.setSize(sf::Vector2f(5000.0f,5000.0f));
+    view.setSize(sf::Vector2f(1000.0f,1000.0f));
+    view.setCenter(WIDTH/2,HEIGHT/2);
 }
 
 Game::~Game() {
@@ -30,27 +31,26 @@ void Game::processEvents() {
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                     window.close();
                 break;
-
             case sf::Event::Closed:
                 window.close();
                 break;
         }
     }
     sf::Vector2i position = sf::Mouse::getPosition(window);
-    if(position.x<WIDTH*0.05)
+    if(position.x<WIDTH*0.01)
     {
         view.move(-0.1f,0.0f);
     }
-    else if(position.x>WIDTH-(0.05*WIDTH))
+    else if(position.x>WIDTH-(0.01*WIDTH))
     {
         view.move(0.1f,0.0f);
     }
 
-    else if(position.y<HEIGHT*0.05)
+    else if(position.y<HEIGHT*0.01)
     {
         view.move(0.0f,-0.1f);
     }
-    else if(position.y>HEIGHT-(0.05*HEIGHT))
+    else if(position.y>HEIGHT-(0.01*HEIGHT))
     {
         view.move(0.0f,0.1f);
     }
