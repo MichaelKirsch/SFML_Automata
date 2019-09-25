@@ -1,11 +1,11 @@
 
 
 #include "World.h"
-World::World(sf::Vector2i worldSizeTiles, bool drawGrid,int tileSize) {
+World::World(sf::Vector2i worldSizeTiles,int tileSize) {
     this->m_tileSize = tileSize;
     this->m_worldSizeInTiles = worldSizeTiles;
-    this->m_drawGrid = drawGrid;
-    test_creature_grid();//TODO just a test
+    this->m_drawGrid = true;
+    createMap();
     if(m_drawGrid)
         m_BuildGrid();
 }
@@ -18,12 +18,10 @@ void World::Draw(sf::RenderWindow &window) {
     if(m_drawGrid)
         window.draw(m_overlayGrid);
     window.draw(m_borderGrid);
-    window.draw(m_creatureGrid);
-    //draw the rest of the stuff
 }
 
 void World::m_BuildGrid() {
-
+    //TODO react to the map
     std::vector<sf::Vector2f> vertices;
     for(int x_position =0;x_position<m_worldSizeInTiles.x;x_position++)
     {
@@ -81,28 +79,32 @@ void World::m_BuildGrid() {
 
 }
 
-void World::test_creature_grid() {
-    int tile_creature_size_difference = 4.0f;
-    std::vector<sf::Vector2f>creature_buffer;
-    for(int x_position=1;x_position<(m_worldSizeInTiles.x-1);x_position++)
+void World::setdrawGrid(bool state) {
+    m_drawGrid = state;
+}
+
+std::vector<int> World::getMap() {
+    return m_map;
+}
+
+void World::createMap() {
+    for (int x_position=0;x_position<m_worldSizeInTiles.x;x_position++)
     {
-        for(int y_position=1;y_position<(m_worldSizeInTiles.y-1);y_position++)
+        for (int y_position=0;y_position<m_worldSizeInTiles.y;y_position++)
         {
-            creature_buffer.push_back(sf::Vector2f((x_position*m_tileSize)+tile_creature_size_difference,(y_position*m_tileSize)+tile_creature_size_difference));
-            creature_buffer.push_back(sf::Vector2f(((x_position+1)*m_tileSize)-tile_creature_size_difference,(y_position*m_tileSize)+tile_creature_size_difference));
-            creature_buffer.push_back(sf::Vector2f(((x_position+1)*m_tileSize)-tile_creature_size_difference,((y_position+1)*m_tileSize)-tile_creature_size_difference));
-            creature_buffer.push_back(sf::Vector2f((x_position*m_tileSize)+tile_creature_size_difference,((y_position+1)*m_tileSize)-tile_creature_size_difference));
+            if(x_position==0 || x_position==m_worldSizeInTiles.x-1 || y_position==0 || y_position==m_worldSizeInTiles.y-1)
+            {
+                m_map.push_back(BORDER);
+            }
+            else
+            {
+                m_map.push_back(GROUND);
+            }
         }
     }
-    std::cout<<creature_buffer.size()<<std::endl;
-    m_creatureGrid = sf::VertexArray(sf::Quads,creature_buffer.size()); // 4 vertices per creature
-    for(int x =0;x<creature_buffer.size();x++)
-    {
-        m_creatureGrid[x].position = creature_buffer[x];
-        m_creatureGrid[x].color = sf::Color(3, 252, 252);
-    }
-
 }
+
+
 
 
 

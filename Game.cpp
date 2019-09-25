@@ -2,8 +2,11 @@
 
 #include "Game.h"
 
-Game::Game() : world(sf::Vector2i(TILEMAP_X,TILEMAP_Y), true,TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata")  {
-    view.setSize(sf::Vector2f(1000.0f,1000.0f));
+Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata")  {
+    world.setdrawGrid(true);
+    entMgr.setBoundaries(world);
+    entMgr.spawnCreatures(100);
+    view.setSize(sf::Vector2f(3000.0f,3000.0f));
     view.setCenter(WIDTH/2,HEIGHT/2);
 }
 
@@ -21,6 +24,7 @@ void Game::run() {
 }
 
 void Game::update() {
+    entMgr.Update();
 }
 
 void Game::processEvents() {
@@ -29,8 +33,19 @@ void Game::processEvents() {
         switch (event.type) {
             case sf::Event::KeyPressed:
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                {
                     window.close();
-                break;
+                    break;
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                    entMgr.spawnCreatures(100);
+                    break;
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
+                    entMgr.spawnCreatures(1000);
+                    break;
+                }
+
             case sf::Event::Closed:
                 window.close();
                 break;
@@ -63,5 +78,6 @@ void Game::render() {
     window.clear(sf::Color(50,50,50));
     window.setView(view);
     world.Draw(window);
+    entMgr.Draw(window);
     window.display();
 }

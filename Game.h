@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "World.h"
+#include <iostream>
+#include "Entitiymanager.h"
 
 #define WIDTH 1000
 #define HEIGHT 1000
@@ -13,6 +15,7 @@ class Game {
 //VARS
 private:
     World world;
+    Entitiymanager entMgr;
     sf::View view;
     sf::RenderWindow window;
 //FUNCTIONS
