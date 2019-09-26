@@ -19,6 +19,7 @@ public:
     void kill();
     bool isAlive(){ return alive;};
     sf::Vector3i getColor();
+    void ExpermentalSetColor(sf::Vector3i color){m_color = color;};
     sf::Vector2i getPosition();
     ~Creature();
 private:

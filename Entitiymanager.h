@@ -14,7 +14,7 @@ class Entitiymanager {
 public:
     Entitiymanager();
     void Draw(sf::RenderWindow& window);
-    void setBoundaries(World& world);
+    void attachtoWorld(World& world);
     void spawnCreatures(int howMany);
     void Update();
     unsigned int getNbrCreatures(){ return m_livingCreatures.size();};

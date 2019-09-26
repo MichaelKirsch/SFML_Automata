@@ -25,12 +25,13 @@ void Entitiymanager::spawnCreatures(int howMany) {
         else
         {
             Creature buffer = Creature(rand_pos,19,custom_random_generator::getRandomInt(0,1000),10);
+            buffer.ExpermentalSetColor(custom_random_generator::getRandomColor());
             m_livingCreatures.push_back(buffer);
         }
     }
 }
 
-void Entitiymanager::setBoundaries(World& world) {
+void Entitiymanager::attachtoWorld(World& world) {
     this->p_world = &world;
 }
 
@@ -57,7 +58,7 @@ void Entitiymanager::updateVertexArray() {
     for(int x =0;x<creature_buffer.size();x++)
     {
         m_CreatureVertices[x].position = creature_buffer[x];
-        sf::Vector3i color = custom_random_generator::getRandomColor();
+        sf::Vector3i color = m_livingCreatures[(int)x/4].getColor();
         m_CreatureVertices[x].color = sf::Color(color.x,color.y,color.z);
     }
 }
@@ -68,6 +69,7 @@ void Entitiymanager::updateVertexArray() {
 void Entitiymanager::Update() {
     updateCreatures();
     updateVertexArray();
+    std::cout << "living creatures:"<<m_livingCreatures.size() << std::endl;
 }
 
 void Entitiymanager::updateCreatures() {
@@ -85,7 +87,7 @@ void Entitiymanager::updateCreatures() {
     {
         if(!m_livingCreatures[x].isAlive())
         {
-            std::cout<<&m_livingCreatures[x]<<" died"<<std::endl;
+            //std::cout<<&m_livingCreatures[x]<<" died"<<std::endl;
             m_livingCreatures.erase(m_livingCreatures.begin()+x);
 
         }

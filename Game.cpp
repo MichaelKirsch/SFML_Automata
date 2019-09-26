@@ -5,9 +5,9 @@
 Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata")  {
     custom_random_generator::reseed();
     world.setdrawGrid(true);
-    entMgr.setBoundaries(world);
+    entMgr.attachtoWorld(world);
     entMgr.spawnCreatures(100);
-    view.setSize(sf::Vector2f(3000.0f,3000.0f));
+    view.setSize(sf::Vector2f(5000.0f,5000.0f));
     view.setCenter(WIDTH/2,HEIGHT/2);
 }
 
