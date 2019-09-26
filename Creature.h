@@ -23,6 +23,7 @@ public:
     int getStrength(){return m_strength;};
     bool isAlive(){ return alive;};
     sf::Vector3i getColor();
+    void setPosition(sf::Vector2i newPos){m_positionInGrid=newPos;};
     void ExpermentalSetColor(sf::Vector3i color){m_color = color;};
     sf::Vector2i getPosition();
     ~Creature();

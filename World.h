@@ -14,6 +14,7 @@ class World {
 public:
     friend class Entitiymanager;
     World(sf::Vector2i worldSizeTiles,int tileSize);
+    void toggleGrid();
     enum Tilestate{BORDER,GROUND,WATER,DESERT};
     void setdrawGrid(bool state);
     void printout(std::string whattoprint){std::cout<<whattoprint<<std::endl;};

@@ -104,6 +104,10 @@ void World::createMap() {
     }
 }
 
+void World::toggleGrid() {
+    m_drawGrid = !m_drawGrid;
+}
+
 
 
 

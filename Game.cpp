@@ -6,8 +6,8 @@ Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::Vid
     custom_random_generator::reseed();
     world.setdrawGrid(true);
     entMgr.attachtoWorld(world);
-    entMgr.spawnCreatures(10);
-    view.setSize(sf::Vector2f(5000.0f,5000.0f));
+    entMgr.spawnCreatures(100);
+    view.setSize(sf::Vector2f(4000.0f,4000.0f));
     view.setCenter(WIDTH/2,HEIGHT/2);
 }
 
@@ -28,9 +28,11 @@ void Game::run() {
 }
 
 void Game::update(sf::Time elapsed) {
+
     time_passed+=elapsed.asSeconds();
     if(time_passed>0.05)
     {
+        printf("Creatures:%i\n",entMgr.getNbrCreatures());
         time_passed=0.0;
         entMgr.Update();
     }
@@ -53,6 +55,10 @@ void Game::processEvents() {
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
                     entMgr.spawnCreatures(10);
+                    break;
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
+                    world.toggleGrid();
                     break;
                 }
 
