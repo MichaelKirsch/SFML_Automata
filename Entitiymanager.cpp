@@ -21,11 +21,11 @@ void Entitiymanager::spawnCreatures(int howMany) {
         int y_position=(int)RandomFloat(0.0,(float)p_world->m_worldSizeInTiles.y);
         if(p_world->m_map[convertVectorToInt(sf::Vector2i(x_position,y_position))] == World::BORDER)
         {
-            std::cout << "position "<< x_position << "|" << y_position << "is a border" << std::endl;
+            //std::cout << "position "<< x_position << "|" << y_position << "is a border" << std::endl;
         }
         else
         {
-            Creature buffer = Creature(sf::Vector2i(x_position,y_position),19,10,10);
+            Creature buffer = Creature(sf::Vector2i(x_position,y_position),19,(int)RandomFloat(0,1999),10);
             m_livingCreatures.push_back(buffer);
         }
     }
@@ -71,14 +71,31 @@ void Entitiymanager::updateVertexArray() {
 
 
 void Entitiymanager::Update() {
+    updateCreatures();
     updateVertexArray();
 }
 
 void Entitiymanager::updateCreatures() {
     for(auto& creature:m_livingCreatures)
     {
-
+        creature.update();
+        if(p_world->m_map[convertVectorToInt(creature.getPosition())]==World::BORDER)
+        {
+            creature.kill();
+        }
     }
+
+
+    for(int x=0;x<m_livingCreatures.size();x++)
+    {
+        if(!m_livingCreatures[x].isAlive())
+        {
+            std::cout<<&m_livingCreatures[x]<<" died"<<std::endl;
+            m_livingCreatures.erase(m_livingCreatures.begin()+x);
+
+        }
+    }
+
 }
 
 

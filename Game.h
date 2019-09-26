@@ -3,6 +3,7 @@
 #include "World.h"
 #include <iostream>
 #include "Entitiymanager.h"
+#include "Util/RandomGenerator.h"
 
 #define WIDTH 1000
 #define HEIGHT 1000

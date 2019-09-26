@@ -7,6 +7,7 @@
 #include "World.h"
 #include <vector>
 #include "Creature.h"
+#include <iostream>
 
 
 class Entitiymanager {

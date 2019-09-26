@@ -3,6 +3,7 @@
 #include "Game.h"
 
 Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata")  {
+    custom_random_generator::reseed();
     world.setdrawGrid(true);
     entMgr.setBoundaries(world);
     entMgr.spawnCreatures(100);
@@ -15,6 +16,8 @@ Game::~Game() {
 }
 
 void Game::run() {
+
+
     while(window.isOpen())
     {
         processEvents();
