@@ -24,15 +24,21 @@ void Entitiymanager::spawnCreatures(int howMany) {
         }
         else
         {
-            Creature buffer = Creature(rand_pos,19,custom_random_generator::getRandomInt(0,1000),10);
+            Creature buffer = Creature(rand_pos,custom_random_generator::getRandomInt(0,100),custom_random_generator::getRandomInt(0,100),custom_random_generator::getRandomInt(0,10));
             buffer.ExpermentalSetColor(custom_random_generator::getRandomColor());
-            m_livingCreatures.push_back(buffer);
+            if(m_CreaturePositions[convertVectorToInt(rand_pos)]==nullptr)
+            {
+                m_livingCreatures.push_back(buffer);
+                m_CreaturePositions[convertVectorToInt(rand_pos)]=&m_livingCreatures.back();
+        }
         }
     }
 }
 
 void Entitiymanager::attachtoWorld(World& world) {
     this->p_world = &world;
+    m_CreaturePositions.resize(p_world->m_map.size());
+    m_CreaturePositions.assign(m_CreaturePositions.size(), nullptr); //fill the vector with nullpointers;
 }
 
 
@@ -69,30 +75,61 @@ void Entitiymanager::updateVertexArray() {
 void Entitiymanager::Update() {
     updateCreatures();
     updateVertexArray();
-    std::cout << "living creatures:"<<m_livingCreatures.size() << std::endl;
 }
 
 void Entitiymanager::updateCreatures() {
+    if(m_CreaturePositions.size()!=p_world->m_map.size())
+    {
+        std::cout << " array errror" <<std::endl;
+    }
     for(auto& creature:m_livingCreatures)
     {
+        m_CreaturePositions[convertVectorToInt(creature.getPosition())] = nullptr; //kick out the old pointer
+        sf::Vector2i old_pos=creature.getPosition();
         creature.update();
         if(p_world->m_map[convertVectorToInt(creature.getPosition())]==World::BORDER)
         {
             creature.kill();
         }
+        else
+        {
+            if(creature.canReproduce())
+            {
+                m_livingCreatures.push_back(Creature(old_pos,creature.getStrength(),creature.getMaxAge(),creature.getReprductionBonus()));//spawn a child on the old position
+                m_livingCreatures.back().ExpermentalSetColor(creature.getColor());
+                m_CreaturePositions[convertVectorToInt(old_pos)]=&m_livingCreatures.back();
+            }
+            if (checkCollision(creature))
+            {
+                if(fight(creature))
+                {
+                    m_CreaturePositions[convertVectorToInt(creature.getPosition())]->kill(); // kill the loosing creature
+                    m_CreaturePositions[convertVectorToInt(creature.getPosition())] = &creature; //newposition
+                }
+                else
+                {
+                    creature.kill();
+                }
+            }
+        }
     }
-
-
     for(int x=0;x<m_livingCreatures.size();x++)
     {
         if(!m_livingCreatures[x].isAlive())
         {
-            //std::cout<<&m_livingCreatures[x]<<" died"<<std::endl;
+            m_CreaturePositions[convertVectorToInt(m_livingCreatures[x].getPosition())] = nullptr; //kick out the old pointer
             m_livingCreatures.erase(m_livingCreatures.begin()+x);
-
+            x=0;
         }
     }
+}
 
+bool Entitiymanager::checkCollision(Creature creature) {
+    return (m_CreaturePositions[convertVectorToInt(creature.getPosition())] != nullptr);
+}
+
+bool Entitiymanager::fight(Creature creature) {
+    return m_CreaturePositions[convertVectorToInt(creature.getPosition())]->getStrength()<=creature.getStrength();
 }
 
 

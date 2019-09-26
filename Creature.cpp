@@ -28,14 +28,10 @@ Creature::Creature(sf::Vector2i spawnPos, unsigned int strength, unsigned int ma
 void Creature::update() {
     m_age++;
     m_reproductionValue++;
-    int direction =custom_random_generator::getRandomInt(1,8);
-
+    int direction =custom_random_generator::getRandomInt(1,7);
     switch (direction)
     {
-        case 8:
-            m_positionInGrid.x+=0;
-            m_positionInGrid.y+=1;
-            break;
+
 
         case 1:
             m_positionInGrid.x+=1;
@@ -63,17 +59,26 @@ void Creature::update() {
             break;
         case 7:
             m_positionInGrid.x+=0;
-            m_positionInGrid.y+=0;
+            m_positionInGrid.y+=1;
             break;
     }
 
 
     if(m_age>m_maxAge)
-        alive= false;
+        alive=false;
 }
 
 void Creature::kill() {
     alive= false;
+}
+
+bool Creature::canReproduce() {
+    if(m_reproductionValue>REPRODUCTION_THRESHOLD)
+    {
+        m_reproductionValue=m_reproductionBonus;
+        return true;
+    }
+    return false;
 }
 
 

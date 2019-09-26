@@ -21,11 +21,13 @@ public:
     ~Entitiymanager();
 
 private:
+    bool checkCollision(Creature creature);
+    bool fight(Creature creature);
     World * p_world;
     int convertVectorToInt(sf::Vector2i);
     void updateCreatures();
     void updateVertexArray();
-    std::vector<int>*m_map;
+    std::vector<Creature*>m_CreaturePositions;
     sf::VertexArray m_CreatureVertices;
     std::vector<Creature> m_livingCreatures;
 protected:

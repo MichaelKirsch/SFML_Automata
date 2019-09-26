@@ -25,7 +25,8 @@ public:
     ~Game();
     void run();
 private:
-    void update();
+    float time_passed;
+    void update(sf::Time elapsed);
     void processEvents();
     void render();
 };

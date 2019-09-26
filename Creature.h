@@ -10,13 +10,17 @@
 #include <ctime>
 #include "Util/RandomGenerator.h"
 
-#define REPRODUCTION_THRESHOLD 30;
+#define REPRODUCTION_THRESHOLD 40
 
 class Creature {
 public:
     Creature(sf::Vector2i spawnPos, unsigned int strength, unsigned int maxAge, unsigned int reproductionBonus);
     void update();
     void kill();
+    bool canReproduce();
+    int getMaxAge(){ return m_maxAge;};
+    int getReprductionBonus(){ return m_reproductionBonus;};
+    int getStrength(){return m_strength;};
     bool isAlive(){ return alive;};
     sf::Vector3i getColor();
     void ExpermentalSetColor(sf::Vector3i color){m_color = color;};
