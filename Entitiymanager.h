@@ -22,8 +22,6 @@ public:
 
 private:
     World * p_world;
-    float RandomFloat(float min, float max);
-    sf::Vector2i generateNewPos(sf::Vector2i oldPos);
     int convertVectorToInt(sf::Vector2i);
     void updateCreatures();
     void updateVertexArray();

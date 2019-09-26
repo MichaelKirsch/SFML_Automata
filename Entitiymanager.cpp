@@ -17,15 +17,14 @@ void Entitiymanager::Draw(sf::RenderWindow &window) {
 void Entitiymanager::spawnCreatures(int howMany) {
     for(int creature=0;creature<howMany;creature++)
     {
-        int x_position=(int)RandomFloat(0.0,(float)p_world->m_worldSizeInTiles.x);
-        int y_position=(int)RandomFloat(0.0,(float)p_world->m_worldSizeInTiles.y);
-        if(p_world->m_map[convertVectorToInt(sf::Vector2i(x_position,y_position))] == World::BORDER)
+        sf::Vector2i rand_pos = custom_random_generator::getRandomPosition(0,p_world->m_worldSizeInTiles.x,0,p_world->m_worldSizeInTiles.y);
+        if(p_world->m_map[convertVectorToInt(rand_pos)] == World::BORDER)
         {
             //std::cout << "position "<< x_position << "|" << y_position << "is a border" << std::endl;
         }
         else
         {
-            Creature buffer = Creature(sf::Vector2i(x_position,y_position),19,(int)RandomFloat(0,1999),10);
+            Creature buffer = Creature(rand_pos,19,custom_random_generator::getRandomInt(0,1000),10);
             m_livingCreatures.push_back(buffer);
         }
     }
@@ -35,11 +34,6 @@ void Entitiymanager::setBoundaries(World& world) {
     this->p_world = &world;
 }
 
-float Entitiymanager::RandomFloat(float min, float max)
-{
-    float r = (float)rand() / (float)RAND_MAX;
-    return min + r * (max - min);
-}
 
 int Entitiymanager::convertVectorToInt(sf::Vector2i pos) {
     return(p_world->m_worldSizeInTiles.y*pos.x)+pos.y;
@@ -63,7 +57,8 @@ void Entitiymanager::updateVertexArray() {
     for(int x =0;x<creature_buffer.size();x++)
     {
         m_CreatureVertices[x].position = creature_buffer[x];
-        m_CreatureVertices[x].color = sf::Color((int)RandomFloat(0,255), (int)RandomFloat(0,255), (int)RandomFloat(0,255));
+        sf::Vector3i color = custom_random_generator::getRandomColor();
+        m_CreatureVertices[x].color = sf::Color(color.x,color.y,color.z);
     }
 }
 
