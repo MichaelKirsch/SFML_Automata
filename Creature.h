@@ -10,7 +10,7 @@
 #include <ctime>
 #include "Util/RandomGenerator.h"
 
-#define REPRODUCTION_THRESHOLD 40
+#define REPRODUCTION_THRESHOLD 10
 
 class Creature {
 public:
@@ -23,7 +23,7 @@ public:
     int getStrength(){return m_strength;};
     bool isAlive(){ return alive;};
     sf::Vector3i getColor();
-    void setPosition(sf::Vector2i newPos){m_positionInGrid=newPos;};
+    void setPosition(sf::Vector2i newPos);
     void ExpermentalSetColor(sf::Vector3i color){m_color = color;};
     sf::Vector2i getPosition();
     ~Creature();

@@ -28,7 +28,6 @@ void Game::run() {
 }
 
 void Game::update(sf::Time elapsed) {
-
     time_passed+=elapsed.asSeconds();
     if(time_passed>0.05)
     {

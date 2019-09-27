@@ -30,9 +30,8 @@ void Creature::update() {
     m_reproductionValue++;
     if(m_age>m_maxAge)
     {
-        alive= false;
+        alive = false;
     }
-
 }
 
 void Creature::kill() {
@@ -46,6 +45,10 @@ bool Creature::canReproduce() {
         return true;
     }
     return false;
+}
+
+void Creature::setPosition(sf::Vector2i newPos) {
+    m_positionInGrid=newPos;
 }
 
 

@@ -21,7 +21,6 @@ void World::Draw(sf::RenderWindow &window) {
 }
 
 void World::m_BuildGrid() {
-    //TODO react to the map
     std::vector<sf::Vector2f> vertices;
     for(int x_position =0;x_position<m_worldSizeInTiles.x;x_position++)
     {

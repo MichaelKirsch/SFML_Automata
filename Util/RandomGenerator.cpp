@@ -14,4 +14,19 @@ sf::Vector2i custom_random_generator::getRandomPosition(int minx, int maxx, int 
     return sf::Vector2i(getRandomInt(minx,maxx),getRandomInt(miny,maxy));
 }
 
+sf::Vector2i custom_random_generator::generateMovePos(sf::Vector2i oldPosition) {
+    int x_val = 2-getRandomInt(1,3);
+    int y_val = 2-getRandomInt(1,3);
+    while(x_val==0&&y_val==0)
+    {
+        x_val = 2-getRandomInt(1,3);
+        y_val = 2-getRandomInt(1,3);
+    }
+    return sf::Vector2i(oldPosition.x+x_val,oldPosition.y+y_val);
+}
+
+int custom_random_generator::getMutation() {
+    return (2-getRandomInt(1,3));
+}
+
 
