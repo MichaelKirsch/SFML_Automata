@@ -10,7 +10,7 @@
 #include <ctime>
 #include "Util/RandomGenerator.h"
 
-#define REPRODUCTION_THRESHOLD 10
+#define REPRODUCTION_THRESHOLD 30
 
 class Creature {
 public:

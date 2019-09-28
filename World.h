@@ -12,7 +12,7 @@
 class World {
 //FUNCTIONS
 public:
-    friend class Entitiymanager;
+    friend class Entitymanager;
     World(sf::Vector2i worldSizeTiles,int tileSize);
     void toggleGrid();
     enum Tilestate{BORDER,GROUND,WATER,DESERT};

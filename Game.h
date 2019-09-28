@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "World.h"
 #include <iostream>
-#include "Entitiymanager.h"
+#include "Entitymanager.h"
 #include "Util/RandomGenerator.h"
 
 #define WIDTH 1000
@@ -12,11 +12,13 @@
 #define TILEMAP_Y 100
 #define TILESIZE 32
 
+#define HOW_MANY_CREATURES_AT_START 10
+
 class Game {
 //VARS
 private:
     World world;
-    Entitiymanager entMgr;
+    Entitymanager entMgr;
     sf::View view;
     sf::RenderWindow window;
 //FUNCTIONS

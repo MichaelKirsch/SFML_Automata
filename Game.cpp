@@ -6,7 +6,7 @@ Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::Vid
     custom_random_generator::reseed();
     world.setdrawGrid(true);
     entMgr.attachtoWorld(world);
-    entMgr.spawnCreatures(100);
+    entMgr.spawnCreatures(HOW_MANY_CREATURES_AT_START);
     view.setSize(sf::Vector2f(4000.0f,4000.0f));
     view.setCenter(WIDTH/2,HEIGHT/2);
 }
@@ -35,7 +35,6 @@ void Game::update(sf::Time elapsed) {
         time_passed=0.0;
         entMgr.Update();
     }
-
 }
 
 void Game::processEvents() {
