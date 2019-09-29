@@ -2,12 +2,12 @@
 
 #include "Game.h"
 
-Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata", sf::Style::Fullscreen)  {
+Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata")  {
     custom_random_generator::reseed();
     world.setdrawGrid(true);
     entMgr.attachtoWorld(world);
     entMgr.spawnCreatures(HOW_MANY_CREATURES_AT_START);
-    view.setSize(sf::Vector2f(16000.0f/2.7,9000.0f/2.7));
+    view.setSize(sf::Vector2f(4000,4000));
     view.setCenter(WIDTH,HEIGHT);
 }
 
@@ -56,7 +56,7 @@ void Game::processEvents(sf::Time elapsed) {
                         break;
                     }
                     if(sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
-                        entMgr.spawnCreatures(10);
+                        entMgr.spawnCreatures(4);
                         break;
                     }
                     if(sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {

@@ -8,7 +8,7 @@ void custom_random_generator::reseed(){
 
 sf::Vector3i custom_random_generator::getRandomColor() {
     sf::Vector3i random_color(0,0,0);
-    while(random_color.x+random_color.y+random_color.z<200)
+    while(random_color.x+random_color.y+random_color.z<250)
     {
         random_color =  sf::Vector3i(getRandomInt(0,255),getRandomInt(0,255),getRandomInt(0,255));
     }

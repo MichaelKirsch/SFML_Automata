@@ -12,7 +12,7 @@
 #define TILEMAP_Y 100
 #define TILESIZE 32
 
-#define HOW_MANY_CREATURES_AT_START 10
+#define HOW_MANY_CREATURES_AT_START 50
 
 class Game {
 //VARS
