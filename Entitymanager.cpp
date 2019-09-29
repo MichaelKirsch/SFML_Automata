@@ -27,7 +27,7 @@ void Entitymanager::spawnCreatures(int howMany)
             if (p_world->m_map[convertVectorToInt(rand_pos)] != World::BORDER && getPointerAtPosition(rand_pos) == nullptr)
             {
                 Creature buffer = Creature(rand_pos, custom_random_generator::getRandomInt(10, 100),
-                                           custom_random_generator::getRandomInt(30, 100),
+                                           custom_random_generator::getRandomInt(40, 100),
                                            custom_random_generator::getRandomInt(0, 10));
                 buffer.ExpermentalSetColor(custom_random_generator::getRandomColor());
                 m_livingCreatures.push_back(buffer);

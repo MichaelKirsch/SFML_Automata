@@ -28,9 +28,10 @@ public:
     void run();
 private:
     float time_passed;
+    float event_timer;
     void update(sf::Time elapsed);
-    void processEvents();
-    void render();
+    void processEvents(sf::Time elapsed);
+    void render(sf::Time elapsed);
 };
 
 
