@@ -31,7 +31,14 @@ sf::Vector2i custom_random_generator::generateMovePos(sf::Vector2i oldPosition) 
 }
 
 int custom_random_generator::getMutation() {
-    return (2-getRandomInt(1,3));
+    int chance = getRandomInt(0,10);
+    if(chance==4)
+    {
+        return (2-getRandomInt(1,3));
+    } else
+    {
+        return 0;
+    }
 }
 
 

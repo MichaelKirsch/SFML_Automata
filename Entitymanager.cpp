@@ -24,12 +24,15 @@ void Entitymanager::spawnCreatures(int howMany)
         {
             sf::Vector2i rand_pos = custom_random_generator::getRandomPosition(1, p_world->m_worldSizeInTiles.x - 1, 1,
                                                                                p_world->m_worldSizeInTiles.y - 1);
-            if (p_world->m_map[convertVectorToInt(rand_pos)] != World::BORDER && getPointerAtPosition(rand_pos) == nullptr)
+            if (p_world->m_map[convertVectorToInt(rand_pos)] != World::BORDER && isPositionValid(rand_pos) && !checkCollision(rand_pos))
             {
+
                 Creature buffer = Creature(rand_pos, custom_random_generator::getRandomInt(10, 100),
                                            custom_random_generator::getRandomInt(40, 100),
                                            custom_random_generator::getRandomInt(0, 10));
-                buffer.ExpermentalSetColor(custom_random_generator::getRandomColor());
+                sf::Vector3i random_color = custom_random_generator::getRandomColor();
+                colonies.push_back(random_color);
+                buffer.ExpermentalSetColor(random_color);
                 m_livingCreatures.push_back(buffer);
                 m_CreaturePositions[convertVectorToInt(rand_pos)] = &m_livingCreatures.back();
             }
@@ -86,7 +89,11 @@ void Entitymanager::Update() {
     } else{
         updateTest();
     }
-    
+    updateColonies();
+    if(getNbrColonies()<10)
+    {
+        spawnCreatures(1);
+    }
     updateVertexArray();
 }
 
@@ -101,7 +108,6 @@ void Entitymanager::updateCreatures() {
                reproduce(&creature);
            }
        }
-
     }
     clearAllDeadCreatures();
 }
@@ -179,7 +185,7 @@ void Entitymanager::reproduce(Creature* creature) {
     if(!checkCollision(childPos) && isPositionValid(childPos))
     {
         //no collision so lets spawn a child
-        spawnChild(creature,childPos, false);
+        spawnChild(creature,childPos, MUTATION);
     }
 }
 
@@ -226,6 +232,7 @@ void Entitymanager::clearAllDeadCreatures() {
         {
             clearPosition(m_livingCreatures[x].getPosition()); //kick out the old pointer
             m_livingCreatures.erase(m_livingCreatures.begin()+x); //delete the object
+            x=0;
         }
     }
 }
@@ -247,6 +254,29 @@ void Entitymanager::updateTest() {
         sf::Vector2i oldPos = item.getPosition();
         item.setPosition(sf::Vector2i(oldPos.x,oldPos.y+1));
     }
+}
+
+void Entitymanager::updateColonies() {
+    for(int x=0;x<colonies.size();x++)
+    {
+        bool found =0;
+        for(auto& cr:m_livingCreatures)
+        {
+            if(cr.getColor()==colonies[x])
+            {
+                found =1;
+                break;
+            }
+        }
+        if(!found)
+        {
+            colonies.erase(colonies.begin()+x);
+        }
+    }
+}
+
+int Entitymanager::getNbrColonies() {
+    return colonies.size();
 }
 
 

@@ -9,7 +9,9 @@
 #include "Creature.h"
 #include <iostream>
 #include <map>
+#include <algorithm>
 #define SOFTWARETEST false
+#define MUTATION true
 
 class Entitymanager {
 public:
@@ -18,10 +20,12 @@ public:
     void attachtoWorld(World& world);
     void spawnCreatures(int howMany);
     void Update();
+    int getNbrColonies();
     unsigned int getNbrCreatures(){ return m_livingCreatures.size();};
     ~Entitymanager();
 
 private:
+    void updateColonies();
     bool move (Creature* creature);
     bool isPositionValid(sf::Vector2i positionToCheck);
     void clearAllDeadCreatures();
@@ -43,6 +47,7 @@ private:
     sf::VertexArray m_CreatureVertices;
     std::vector<Creature>m_livingCreatures;
     std::vector<sf::Vector2f>m_creature_buffer;
+    std::vector<sf::Vector3i>colonies;
 
 //TESTS
 private:
