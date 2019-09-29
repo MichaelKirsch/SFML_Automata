@@ -39,8 +39,10 @@ private:
     void updateCreatures();
     void updateVertexArray();
     std::vector<Creature*>m_CreaturePositions;
+    sf::VertexArray* p_CreatureVertices;
     sf::VertexArray m_CreatureVertices;
     std::vector<Creature>m_livingCreatures;
+    std::vector<sf::Vector2f>m_creature_buffer;
 
 //TESTS
 private:

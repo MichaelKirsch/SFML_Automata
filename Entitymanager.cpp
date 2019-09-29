@@ -27,7 +27,7 @@ void Entitymanager::spawnCreatures(int howMany)
             if (p_world->m_map[convertVectorToInt(rand_pos)] != World::BORDER && getPointerAtPosition(rand_pos) == nullptr)
             {
                 Creature buffer = Creature(rand_pos, custom_random_generator::getRandomInt(10, 100),
-                                           custom_random_generator::getRandomInt(10, 100),
+                                           custom_random_generator::getRandomInt(30, 100),
                                            custom_random_generator::getRandomInt(0, 10));
                 buffer.ExpermentalSetColor(custom_random_generator::getRandomColor());
                 m_livingCreatures.push_back(buffer);
@@ -43,8 +43,10 @@ void Entitymanager::attachtoWorld(World& world) {
     m_CreaturePositions.resize(p_world->m_map.size());
     m_CreaturePositions.assign(m_CreaturePositions.size(), nullptr); //fill the vector with nullpointers;
     long max_amount_vertices = 4*(p_world->m_map.size());
+    p_CreatureVertices = &m_CreatureVertices;
     m_CreatureVertices.setPrimitiveType(sf::Quads);
     m_CreatureVertices.resize(max_amount_vertices);
+    m_creature_buffer.reserve((p_world->m_map.size()*4));
 }
 
 
@@ -54,21 +56,21 @@ int Entitymanager::convertVectorToInt(sf::Vector2i pos) {
 
 void Entitymanager::updateVertexArray() {
     m_CreatureVertices.clear();
-    std::vector<sf::Vector2f>creature_buffer;
+    m_creature_buffer.clear();
     int m_tileSize = p_world->m_tileSize;
     int tile_creature_size_difference = m_tileSize*0.8;
     for(auto& item:m_livingCreatures)
     {
         sf::Vector2i pos = item.getPosition();
-        creature_buffer.push_back(sf::Vector2f((float)((pos.x*m_tileSize)+tile_creature_size_difference),(float)((pos.y*m_tileSize)+tile_creature_size_difference)));
-        creature_buffer.push_back(sf::Vector2f((float)(((pos.x+1)*m_tileSize)-tile_creature_size_difference),(float)((pos.y*m_tileSize)+tile_creature_size_difference)));
-        creature_buffer.push_back(sf::Vector2f((float)(((pos.x+1)*m_tileSize)-tile_creature_size_difference),(float)(((pos.y+1)*m_tileSize)-tile_creature_size_difference)));
-        creature_buffer.push_back(sf::Vector2f((float)((pos.x*m_tileSize)+tile_creature_size_difference),(float)(((pos.y+1)*m_tileSize)-tile_creature_size_difference)));
+        m_creature_buffer.push_back(sf::Vector2f((float)((pos.x*m_tileSize)+tile_creature_size_difference),(float)((pos.y*m_tileSize)+tile_creature_size_difference)));
+        m_creature_buffer.push_back(sf::Vector2f((float)(((pos.x+1)*m_tileSize)-tile_creature_size_difference),(float)((pos.y*m_tileSize)+tile_creature_size_difference)));
+        m_creature_buffer.push_back(sf::Vector2f((float)(((pos.x+1)*m_tileSize)-tile_creature_size_difference),(float)(((pos.y+1)*m_tileSize)-tile_creature_size_difference)));
+        m_creature_buffer.push_back(sf::Vector2f((float)((pos.x*m_tileSize)+tile_creature_size_difference),(float)(((pos.y+1)*m_tileSize)-tile_creature_size_difference)));
     }
-    m_CreatureVertices.resize(creature_buffer.size());
-    for(int x =0;x<creature_buffer.size();x++)
+    m_CreatureVertices.resize(m_creature_buffer.size());
+    for(int x =0;x<m_creature_buffer.size();x++)
     {
-        m_CreatureVertices[x].position = creature_buffer[x];
+        m_CreatureVertices[x].position = m_creature_buffer[x];
         sf::Vector3i color = m_livingCreatures[(int)x/4].getColor();
         m_CreatureVertices[x].color = sf::Color(color.x,color.y,color.z);
     }
@@ -177,7 +179,7 @@ void Entitymanager::reproduce(Creature* creature) {
     if(!checkCollision(childPos) && isPositionValid(childPos))
     {
         //no collision so lets spawn a child
-        spawnChild(creature,childPos, true);
+        spawnChild(creature,childPos, false);
     }
 }
 
