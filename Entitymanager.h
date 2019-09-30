@@ -11,7 +11,7 @@
 #include <map>
 #include <algorithm>
 #define SOFTWARETEST false
-#define MUTATION true
+#define MUTATION false
 
 class Entitymanager {
 public:
@@ -31,24 +31,27 @@ private:
     void clearAllDeadCreatures();
     bool checkFriendly(Creature* creature,Creature* other_creature);
     bool checkCollision(sf::Vector2i posToCheck);
-    Creature* getPointerAtPosition(sf::Vector2i position);
     void populatePosition(sf::Vector2i position, Creature* creature);
     void clearPosition(sf::Vector2i position);
     void killCreature(sf::Vector2i position);
     void reproduce(Creature* creature);
     void spawnChild(Creature* creature,sf::Vector2i childPos, bool mutate);
     bool isHeWinningFight(Creature* creature,Creature* other_creature);
-    World * p_world;
     int convertVectorToInt(sf::Vector2i);
     void updateCreatures();
     void updateVertexArray();
+    void killSpecies(sf::Vector3i color);
+
+//VARS
+private:
     std::vector<Creature*>m_CreaturePositions;
     sf::VertexArray* p_CreatureVertices;
     sf::VertexArray m_CreatureVertices;
     std::vector<Creature>m_livingCreatures;
     std::vector<sf::Vector2f>m_creature_buffer;
     std::vector<sf::Vector3i>colonies;
-
+    World * p_world;
+    Creature* getPointerAtPosition(sf::Vector2i position);
 //TESTS
 private:
     void spawnTest();

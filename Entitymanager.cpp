@@ -50,6 +50,7 @@ void Entitymanager::attachtoWorld(World& world) {
     m_CreatureVertices.setPrimitiveType(sf::Quads);
     m_CreatureVertices.resize(max_amount_vertices);
     m_creature_buffer.reserve((p_world->m_map.size()*4));
+    m_livingCreatures.reserve(p_world->m_map.size());
 }
 
 
@@ -90,9 +91,17 @@ void Entitymanager::Update() {
         updateTest();
     }
     updateColonies();
+    if(getNbrColonies()==1)
+    {
+        killSpecies(colonies[0]);
+    }
+    if(getNbrCreatures()==0)
+    {
+        spawnCreatures(50);
+    }
     if(getNbrColonies()<10)
     {
-        spawnCreatures(1);
+        spawnCreatures(getNbrColonies()%10);
     }
     updateVertexArray();
 }
@@ -277,6 +286,16 @@ void Entitymanager::updateColonies() {
 
 int Entitymanager::getNbrColonies() {
     return colonies.size();
+}
+
+void Entitymanager::killSpecies(sf::Vector3i color) {
+    for(int x=0;x<m_livingCreatures.size();x++)
+    {
+        if(m_livingCreatures[x].getColor() == color)
+        {
+            m_livingCreatures[x].kill();
+        }
+    }
 }
 
 

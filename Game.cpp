@@ -29,7 +29,7 @@ void Game::run() {
 
 void Game::update(sf::Time elapsed) {
     time_passed+=elapsed.asSeconds();
-    if(time_passed>0.05)
+    if(time_passed>0.1)
     {
         printf("Creatures:%i\n",entMgr.getNbrCreatures());
         time_passed=0.0;
