@@ -101,7 +101,7 @@ void Entitymanager::Update() {
     }
     if(getNbrColonies()<10)
     {
-        spawnCreatures(getNbrColonies()%10);
+    spawnCreatures(10-getNbrColonies());
     }
     updateVertexArray();
 }

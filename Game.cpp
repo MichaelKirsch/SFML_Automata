@@ -2,7 +2,7 @@
 
 #include "Game.h"
 
-Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata")  {
+Game::Game(): world(sf::Vector2i(TILEMAP_X,TILEMAP_Y),TILESIZE) , window(sf::VideoMode(WIDTH,HEIGHT),"Automata", sf::Style::Close)  {
     custom_random_generator::reseed();
     world.setdrawGrid(true);
     entMgr.attachtoWorld(world);
@@ -62,8 +62,8 @@ void Game::processEvents(sf::Time elapsed) {
                     if(sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
                         world.toggleGrid();
                         break;
-                    }
-
+                    } else
+                    { break;}
                 case sf::Event::Closed:
                     window.close();
                     break;

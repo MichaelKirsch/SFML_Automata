@@ -35,6 +35,7 @@ void Creature::update() {
 }
 
 void Creature::kill() {
+
     alive= false;
 }
 
